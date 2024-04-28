@@ -32,15 +32,24 @@ async function run() {
         // const user = { name: "shibly", email: "shibly@gmail.com" };
         // const result = await (userCollection.insertOne(user));
 
-        // creating post method
+        // Usrs API: load from db and send as api for showing in ui
+        app.get('/user', async (req, res) => {
+            const query = {};
+            const cursor = userCollection.find(query);
+            const users = await cursor.toArray();
+            res.send(users);
+        })
+
+        // POST usr: add a new user (Add)
         app.post('/user', async (req, res) => {
             const newUser = req.body;
             console.log('adding new user', newUser);
-
             // send to db
             const result = await userCollection.insertOne(newUser);
             res.send(result);
         })
+
+
 
 
     } finally {

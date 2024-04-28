@@ -28,5 +28,14 @@ Integrate sending data from client to server
 *3. On server-site: create user post to receive data on the backend
 *4. pm client-side : set fetch with POST, headers, body
 *5. make sure you return a json from the  post API (Backend).
+*-------------------------------------------
+Load Data to the Client side from database
+*-------------------------------------------
+* 1. create get api in server-site with the same name like post method
+* 2. add query obj [logical or null]
+* 3. collection.find(query) : find in userCollection via query to cursor veriable
+* 4. cursor.toArray() : await the cursor variable to toArray function and store it in users veriable  
+* 5. res.send(users) : send the API
 *
+
 */

@@ -25,10 +25,12 @@ const AddUser = () => {
         })
             .then(res => res.json())
             .then(data => {
+                alert('Users added Successfully.');
+                event.target.reset();
                 console.log("Success", data);
             })
     }
-    
+
     return (
         <div>
             <h2>Please add a new User</h2>
