@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 5000;
 
+
+
 // middlewire
 const cors = require('cors');
 app.use(cors());
@@ -10,7 +12,7 @@ app.use(express.json());
 // mongodb
 // user: nomanswe130 &_password: obMIRKLqQb5QnRnj
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = "mongodb+srv://nomanswe130:obMIRKLqQb5QnRnj@cluster0.xmq0nwv.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -48,6 +50,8 @@ async function run() {
             const result = await userCollection.insertOne(newUser);
             res.send(result);
         })
+
+        
 
 
 

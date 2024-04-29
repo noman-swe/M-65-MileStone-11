@@ -35,7 +35,13 @@ Load Data to the Client side from database
 * 2. add query obj [logical or null]
 * 3. collection.find(query) : find in userCollection via query to cursor veriable
 * 4. cursor.toArray() : await the cursor variable to toArray function and store it in users veriable  
-* 5. res.send(users) : send the API
+* 5. res.send(users) : send the API (return the result)
+* from client use useEffect and display as we done before
+*---------------------------------
+*Delete Proecss from DB and Ul
+*---------------------------------
 *
-
+*
+*
+*
 */
