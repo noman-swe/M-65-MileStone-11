@@ -1,8 +1,9 @@
 const express = require('express');
 const app = express();
+const { MongoClient, ServerApiVersion } = require('mongodb');
 const port = process.env.PORT || 5000;
 
-
+const ObjectId = require('mongodb').ObjectId;
 
 // middlewire
 const cors = require('cors');
@@ -12,7 +13,6 @@ app.use(express.json());
 // mongodb
 // user: nomanswe130 &_password: obMIRKLqQb5QnRnj
 
-const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = "mongodb+srv://nomanswe130:obMIRKLqQb5QnRnj@cluster0.xmq0nwv.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -30,16 +30,17 @@ async function run() {
         await client.connect();
         const userCollection = client.db("foodExpress").collection("users");
 
-        //raw data entry
-        // const user = { name: "shibly", email: "shibly@gmail.com" };
-        // const result = await (userCollection.insertOne(user));
-
         // Usrs API: load from db and send as api for showing in ui
         app.get('/user', async (req, res) => {
-            const query = {};
-            const cursor = userCollection.find(query);
-            const users = await cursor.toArray();
-            res.send(users);
+            try {
+                const query = {};
+                const cursor = userCollection.find(query);
+                const users = await cursor.toArray();
+                res.send(users);
+            } catch (error) {
+                console.error("Error fetching users:", error);
+                res.status(500).send("Internal Server Error");
+            }
         })
 
         // POST usr: add a new user (Add)
@@ -51,7 +52,17 @@ async function run() {
             res.send(result);
         })
 
-        
+        // Delete a user from ui and db
+        app.delete('/user/:id', async (req, res) => {
+            // picking the user id from parameter
+            const id = req.params.id;
+            
+            // preparing the delete id
+            const query = { _id: new ObjectId(id) }
+            // deleting from db with deleteOne function
+            const result = await userCollection.deleteOne(query);
+            res.send(result);
+        })
 
 
 
