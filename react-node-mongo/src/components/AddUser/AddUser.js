@@ -22,7 +22,7 @@ const AddUser = () => {
         *2. Backend : newUser = req.body, res.send({result: "success"})        
         */
        
-        //  send the user to backend
+        //  send the user to backend 
         fetch('http://localhost:5000/user', {
             method: 'POST',
             headers: {

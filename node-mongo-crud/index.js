@@ -43,6 +43,14 @@ async function run() {
             }
         })
 
+        // 
+        app.get('/user/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) };
+            const result = await userCollection.findOne(query);
+            res.send(result);
+        })
+
         // POST usr: add a new user (Add)
         app.post('/user', async (req, res) => {
             const newUser = req.body;
@@ -52,11 +60,29 @@ async function run() {
             res.send(result);
         })
 
+        // update
+        app.put('/user/:id', async (req, res) => {
+            const id = req.params.id;
+            const updatedUser = req.body;
+            // find the user from DB by this params-id and update
+            const query = { _id: new ObjectId(id) };
+            const options = { upsert: true };
+            const updatedDoc = {
+                $set: {
+                    name: updatedUser.name,
+                    email: updatedUser.email
+                }
+            };
+            const result = await userCollection.updateOne(query, updatedDoc, options);
+            res.send(result);
+
+        })
+
         // Delete a user from ui and db
         app.delete('/user/:id', async (req, res) => {
             // picking the user id from parameter
             const id = req.params.id;
-            
+
             // preparing the delete id
             const query = { _id: new ObjectId(id) }
             // deleting from db with deleteOne function
